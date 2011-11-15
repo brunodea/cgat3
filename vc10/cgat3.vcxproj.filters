@@ -19,6 +19,12 @@
     <Filter Include="Header Files\Ogre">
       <UniqueIdentifier>{bee5fb81-da3b-4e2d-9820-369bcfb53fb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Ogre\appstate">
+      <UniqueIdentifier>{609331a7-22ce-48f1-92ce-a980e5e19299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Ogre\appstate">
+      <UniqueIdentifier>{50abe39d-cea6-4d0a-bf3c-c4f0c14b9560}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -30,6 +36,12 @@
     <ClCompile Include="..\dependencies\OgreFramework.cpp">
       <Filter>Source Files\Ogre</Filter>
     </ClCompile>
+    <ClCompile Include="..\dependencies\AppStateManager.cpp">
+      <Filter>Source Files\Ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\appstate\GameState.cpp">
+      <Filter>Source Files\Ogre\appstate</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\DungeonsSecretsApp.h">
@@ -37,6 +49,15 @@
     </ClInclude>
     <ClInclude Include="..\dependencies\OgreFramework.hpp">
       <Filter>Header Files\Ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependencies\AppStateManager.hpp">
+      <Filter>Header Files\Ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependencies\AppState.hpp">
+      <Filter>Header Files\Ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\appstate\GameState.h">
+      <Filter>Header Files\Ogre\appstate</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

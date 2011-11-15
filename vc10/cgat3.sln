@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C++ Express 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cgat3", "cgat3\vc10\cgat3.vcxproj", "{4E4F94FD-F193-415C-B71B-36A4FDE90500}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cgat3", "cgat3.vcxproj", "{4E4F94FD-F193-415C-B71B-36A4FDE90500}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

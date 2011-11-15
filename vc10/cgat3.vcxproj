@@ -37,11 +37,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\bin\$(Configuration)\</OutDir>
+    <OutDir>$(OGRE_HOME)\bin\$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\bin\$(Configuration)\</OutDir>
+    <OutDir>$(OGRE_HOME)\bin\$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -77,12 +77,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\dependencies\AppStateManager.cpp" />
     <ClCompile Include="..\dependencies\OgreFramework.cpp" />
+    <ClCompile Include="..\src\appstate\GameState.cpp" />
     <ClCompile Include="..\src\DungeonsSecretsApp.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\dependencies\AppState.hpp" />
+    <ClInclude Include="..\dependencies\AppStateManager.hpp" />
     <ClInclude Include="..\dependencies\OgreFramework.hpp" />
+    <ClInclude Include="..\include\appstate\GameState.h" />
     <ClInclude Include="..\include\DungeonsSecretsApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

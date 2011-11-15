@@ -1,4 +1,5 @@
 #include "DungeonsSecretsApp.h"
+#include "appstate/GameState.h"
 
 using namespace APP;
 
@@ -22,5 +23,9 @@ void DungeonsSecretsApp::start()
 	OgreFramework::getSingletonPtr()->m_pLog->logMessage("Dungeon's Secrets initialized!");
 
 	m_pAppStateManager = new AppStateManager();
+
+    appstate::GameState::create(m_pAppStateManager, "GameState");
+
+    m_pAppStateManager->start(m_pAppStateManager->findByName("GameState"));
 }
 
