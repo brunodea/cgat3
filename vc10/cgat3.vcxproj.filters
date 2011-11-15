@@ -13,5 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Ogre">
+      <UniqueIdentifier>{25def80c-83b4-459e-a28b-f95c5617c845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Ogre">
+      <UniqueIdentifier>{bee5fb81-da3b-4e2d-9820-369bcfb53fb3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\DungeonsSecretsApp.cpp">
+      <Filter>Source Files\Ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dependencies\OgreFramework.cpp">
+      <Filter>Source Files\Ogre</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\DungeonsSecretsApp.h">
+      <Filter>Header Files\Ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependencies\OgreFramework.hpp">
+      <Filter>Header Files\Ogre</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
