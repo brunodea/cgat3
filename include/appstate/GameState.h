@@ -12,6 +12,7 @@ namespace appstate
 
         DECLARE_APPSTATE_CLASS(GameState)
 
+        /* Virtual Functions */
         void enter();
         void exit();
         bool pause();
@@ -26,6 +27,13 @@ namespace appstate
 	    bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
         void itemSelected(OgreBites::SelectMenu* menu);
+
+        /***********************************************/
+
+        void createScene();
+
+    private:
+        bool m_bQuit;
 
     }; //end of class GameState.
 

@@ -42,6 +42,9 @@
     <ClCompile Include="..\src\appstate\GameState.cpp">
       <Filter>Source Files\Ogre\appstate</Filter>
     </ClCompile>
+    <ClCompile Include="..\dependencies\DotSceneLoader.cpp">
+      <Filter>Header Files\Ogre</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\DungeonsSecretsApp.h">
@@ -58,6 +61,12 @@
     </ClInclude>
     <ClInclude Include="..\include\appstate\GameState.h">
       <Filter>Header Files\Ogre\appstate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependencies\DotSceneLoader.hpp">
+      <Filter>Header Files\Ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependencies\rapidxml.hpp">
+      <Filter>Header Files\Ogre</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
