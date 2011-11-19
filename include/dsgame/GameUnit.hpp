@@ -19,16 +19,16 @@ namespace dsgame //Dungeon's Secret Game.
     public:
         GameUnit(Ogre::SceneNode *unit_node)
             : m_Direction(Ogre::Vector3::ZERO), m_Speed(0.f), m_pUnitNode(unit_node),
-              m_isMoving(false), m_DirAngle()
+              m_isMoving(false), m_DirAngle(), m_pAnimState(0)
         {}
         
         GameUnit(const Ogre::Vector3 &dir, const Ogre::Real &speed, Ogre::SceneNode *unit_node)
             : m_Direction(dir), m_Speed(speed), m_pUnitNode(unit_node), m_isMoving(false),
-              m_DirAngle()
+              m_DirAngle(), m_pAnimState(0)
         {}
 
         GameUnit(const Ogre::String &filename, Ogre::SceneNode *unit_node)
-            : m_pUnitNode(unit_node), m_isMoving(false), m_DirAngle()
+            : m_pUnitNode(unit_node), m_isMoving(false), m_DirAngle(), m_pAnimState(0)
         {
             fillGameUnitByFile(filename);
         }
@@ -39,6 +39,10 @@ namespace dsgame //Dungeon's Secret Game.
             {
                 move(timeSinceLastFrame);
             }
+
+            adjustAnimationState(timeSinceLastFrame);
+            if(m_pAnimState != 0)
+                m_pAnimState->addTime(timeSinceLastFrame / 1000.f);
         }
         
         void setMoving(bool moving) { m_isMoving = moving; }
@@ -47,6 +51,8 @@ namespace dsgame //Dungeon's Secret Game.
             m_DirAngle += angle;
             m_pUnitNode->yaw(angle);
         }
+
+        virtual void adjustAnimationState(double timeSinceLastFrame) = 0;
 
     protected:
         
@@ -97,10 +103,11 @@ namespace dsgame //Dungeon's Secret Game.
     private:
         Ogre::Vector3 m_Direction;
         Ogre::Real m_Speed;
-
+        
         Ogre::SceneNode *m_pUnitNode;
         bool m_isMoving;
         Ogre::Degree m_DirAngle;
+        Ogre::AnimationState *m_pAnimState;
     }; //end of class GameUnit.
 } //end of namespace dsgame.
 
