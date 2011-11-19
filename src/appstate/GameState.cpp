@@ -56,6 +56,9 @@ void GameState::update(double timeSinceLastFrame)
 
     m_pHero->getInput();
     m_pHero->update(timeSinceLastFrame);
+
+    if(m_pHero->isMoving())
+        m_pCamera->move(m_pHero->getDirection()*m_pHero->getSpeed()*timeSinceLastFrame);
 }
 
 bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)

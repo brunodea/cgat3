@@ -62,6 +62,8 @@ namespace dsgame //Dungeon's Secret Game.
 
         Ogre::Real getSpeed() { return m_Speed; }
 
+        bool isMoving() { return m_isMoving; }
+
     protected:
         
         virtual void move(double timeSinceLastFrame)
