@@ -4,8 +4,13 @@
 using namespace appstate;
 
 GameState::GameState()
-    : m_bQuit(false)
+    : m_bQuit(false), m_pHero(0)
 {
+}
+
+GameState::~GameState()
+{
+    delete m_pHero;
 }
 
 void GameState::enter()
@@ -48,6 +53,9 @@ void GameState::update(double timeSinceLastFrame)
         popAppState();
         return;
     }
+
+    m_pHero->getInput();
+    m_pHero->update(timeSinceLastFrame);
 }
 
 bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)
@@ -107,6 +115,8 @@ void GameState::createScene()
 
     m_pCamera = m_pSceneMgr->getCamera("HeroCam");
     OgreFramework::getSingletonPtr()->m_pViewport->setCamera(m_pCamera);
+
+    m_pHero = new dsgame::HeroUnit(m_pSceneMgr->getEntity("HeroEntity"));
 
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Game Scene Created...");
 }

@@ -2,6 +2,7 @@
 #define CGAT3_GAME_STATE_H_
 
 #include "AppState.hpp"
+#include "dsgame/HeroUnit.hpp"
 
 namespace appstate
 {
@@ -9,6 +10,7 @@ namespace appstate
     {
     public:
         GameState();
+        ~GameState();
 
         DECLARE_APPSTATE_CLASS(GameState)
 
@@ -34,6 +36,8 @@ namespace appstate
 
     private:
         bool m_bQuit;
+
+        dsgame::HeroUnit *m_pHero;
 
     }; //end of class GameState.
 

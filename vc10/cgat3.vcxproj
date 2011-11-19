@@ -37,7 +37,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(OGRE_HOME)\bin\$(Configuration)\</OutDir>
+    <OutDir>..\bin\$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -91,6 +91,8 @@
     <ClInclude Include="..\dependencies\OgreFramework.hpp" />
     <ClInclude Include="..\dependencies\rapidxml.hpp" />
     <ClInclude Include="..\include\appstate\GameState.h" />
+    <ClInclude Include="..\include\dsgame\GameUnit.hpp" />
+    <ClInclude Include="..\include\dsgame\HeroUnit.hpp" />
     <ClInclude Include="..\include\DungeonsSecretsApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

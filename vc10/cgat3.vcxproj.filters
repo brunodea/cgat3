@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Ogre\appstate">
       <UniqueIdentifier>{50abe39d-cea6-4d0a-bf3c-c4f0c14b9560}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Ogre\dsgame">
+      <UniqueIdentifier>{46105552-1182-41b8-a93f-9bb30179bb07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -67,6 +70,12 @@
     </ClInclude>
     <ClInclude Include="..\dependencies\rapidxml.hpp">
       <Filter>Header Files\Ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dsgame\GameUnit.hpp">
+      <Filter>Header Files\Ogre\dsgame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dsgame\HeroUnit.hpp">
+      <Filter>Header Files\Ogre\dsgame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
