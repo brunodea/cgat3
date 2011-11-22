@@ -19,7 +19,7 @@ void GameState::enter()
     m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
     m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
-    OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
+    //OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
 
     createScene();
 }
@@ -90,8 +90,23 @@ bool GameState::mouseMoved(const OIS::MouseEvent &arg)
 
 bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-    if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(arg, id)) return true;
+    //if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(arg, id)) return true;
+    
+    Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
+    Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
+           
+    Ogre::Real offsetX = arg.state.X.abs / screenWidth;
+    Ogre::Real offsetY = arg.state.Y.abs / screenHeight;
 
+    Ogre::Ray mouseRay = m_pCamera->getCameraToViewportRay(offsetX, offsetY);
+    std::pair<bool, Ogre::Real> rayresult = mouseRay.intersects(m_pSceneMgr->getEntity("Chao")->getWorldBoundingBox());
+    if(rayresult.first)
+    {
+        Ogre::Vector3 position = mouseRay.getPoint(rayresult.second);
+        m_pHero->setDestination(position);
+    }
+
+    OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(arg, id);
     return true;
 }
 
@@ -119,7 +134,6 @@ void GameState::createScene()
     m_pCamera = m_pSceneMgr->getCamera("HeroCam");
     OgreFramework::getSingletonPtr()->m_pViewport->setCamera(m_pCamera);
 
-    m_pHero = new dsgame::HeroUnit(m_pSceneMgr->getEntity("HeroEntity"));
-
+    m_pHero = new dsgame::HeroUnit(m_pSceneMgr->getEntity("HeroEntity"),m_pSceneMgr->getSceneNode("HeroNode"));
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Game Scene Created...");
 }

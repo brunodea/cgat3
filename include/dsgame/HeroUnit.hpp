@@ -11,8 +11,8 @@ namespace dsgame
     class HeroUnit : public GameUnit
     {
     public:
-        HeroUnit(Ogre::Entity *entity)
-            : GameUnit("media/initchars/hero.dsg", entity)
+        HeroUnit(Ogre::Entity *entity, Ogre::Node *hero_node)
+            : GameUnit("media/initchars/hero.dsg", entity,hero_node)
         {
         }
 
@@ -31,7 +31,13 @@ namespace dsgame
 
         void getInput()
         {
+            /*
             if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_W))
+            {
+                Ogre::Vector3 olddir = getDirection();
+                rotate(20.f);
+                moveTo(m_pEntity->getParentNode()->getPosition()*2 + (olddir*5));
+            }
                 m_isMoving = true;
             else
                 m_isMoving = false;
@@ -40,8 +46,8 @@ namespace dsgame
                 rotate(Ogre::Degree(1.f));
             else if(OgreFramework::getSingletonPtr()->m_pKeyboard->isKeyDown(OIS::KC_D))
                 rotate(Ogre::Degree(-1.f));
+            */
         }
-
     }; //end of class HeroUnit.
 } //end of namespace dsgame.
 
