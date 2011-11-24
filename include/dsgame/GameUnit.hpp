@@ -90,25 +90,26 @@ namespace dsgame //Dungeon's Secret Game.
             {
                 //se, após a rotação, o ângulo entre a direção e o destino for maior, significa que o certo
                 //era rotacionar para o outro lado, pois este está mais perto.
-                Ogre::Real init_angle = Ogre::Degree(dir.angleBetween(dest)).valueDegrees();
+                Ogre::Real init_angle = dir.angleBetween(dest).valueDegrees();
                 
-                Ogre::Real rot_angle = 5.f;
+                Ogre::Real rot_angle = dir.angleBetween(dir+dest).valueDegrees()/(dir.distance(dest)*5.f);
+
                 m_DirAngle += Ogre::Degree(rot_angle);
-                Ogre::Real after_angle = Ogre::Degree(getDirection().angleBetween(dest)).valueDegrees();
+                Ogre::Real after_angle = getDirection().angleBetween(dest).valueDegrees();
                 m_DirAngle -= Ogre::Degree(rot_angle);
 
                 if(after_angle > init_angle)
                     rot_angle *= -1;
+
                 rotate(rot_angle);
-                
             }
-            
+
             m_pUnitNode->translate(getDirection()*getSpeed()*timeSinceLastFrame);
         }
 
         bool shouldMove()
         {
-            return m_pUnitNode->getPosition().distance(m_Destination) >= .05f;
+            return m_pUnitNode->getPosition().distance(m_Destination) >= .5f;
         }
 
     protected:
