@@ -4,7 +4,7 @@
 using namespace appstate;
 
 GameState::GameState()
-    : m_bQuit(false), m_pHero(0)
+    : m_bQuit(false), m_pHero(0), m_bRMousePressed(false)
 {
 }
 
@@ -53,10 +53,11 @@ void GameState::update(double timeSinceLastFrame)
         popAppState();
         return;
     }
-
+    
     m_pHero->getInput();
     m_pHero->update(timeSinceLastFrame);
-
+    
+    m_pCamera->lookAt(m_pHero->getNode()->getPosition());
     if(m_pHero->isMoving())
         m_pCamera->move(m_pHero->getDirection()*m_pHero->getSpeed()*timeSinceLastFrame);
 }
@@ -82,6 +83,15 @@ bool GameState::keyReleased(const OIS::KeyEvent &keyEventRef)
 
 bool GameState::mouseMoved(const OIS::MouseEvent &arg)
 {
+    if(m_bRMousePressed)
+    {
+        Ogre::Real val = .5f;
+        if(arg.state.X.rel < 0)
+            val *= -1;
+        Ogre::Vector3 dir = Ogre::Vector3(val,0.f,0.f);
+        m_pCamera->moveRelative(dir);
+    }
+
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseMove(arg)) return true;
 
     return true;
@@ -90,28 +100,39 @@ bool GameState::mouseMoved(const OIS::MouseEvent &arg)
 
 bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-    //if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(arg, id)) return true;
-    
-    Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
-    Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
-           
-    Ogre::Real offsetX = arg.state.X.abs / screenWidth;
-    Ogre::Real offsetY = arg.state.Y.abs / screenHeight;
-
-    Ogre::Ray mouseRay = m_pCamera->getCameraToViewportRay(offsetX, offsetY);
-    std::pair<bool, Ogre::Real> rayresult = mouseRay.intersects(m_pSceneMgr->getEntity("Chao")->getWorldBoundingBox());
-    if(rayresult.first)
+    if(id == OIS::MB_Right)
     {
-        Ogre::Vector3 position = mouseRay.getPoint(rayresult.second);
-        m_pHero->setDestination(position);
+        OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
+        m_bRMousePressed = true;
     }
+    else if(id == OIS::MB_Left)
+    {    
+        Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
+        Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
+           
+        Ogre::Real offsetX = arg.state.X.abs / screenWidth;
+        Ogre::Real offsetY = arg.state.Y.abs / screenHeight;
 
+        Ogre::Ray mouseRay = m_pCamera->getCameraToViewportRay(offsetX, offsetY);
+        std::pair<bool, Ogre::Real> rayresult = mouseRay.intersects(m_pSceneMgr->getEntity("Chao")->getWorldBoundingBox());
+        if(rayresult.first)
+        {
+            Ogre::Vector3 position = mouseRay.getPoint(rayresult.second);
+            m_pHero->setDestination(position);
+        }
+    }
     OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(arg, id);
     return true;
 }
 
 bool GameState::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
+    if(id == OIS::MB_Right)
+    {
+        OgreFramework::getSingletonPtr()->m_pTrayMgr->showCursor();
+        m_bRMousePressed = false;
+    }
+
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseUp(arg, id)) return true;
 
     return true;

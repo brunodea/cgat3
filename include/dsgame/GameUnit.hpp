@@ -75,6 +75,7 @@ namespace dsgame //Dungeon's Secret Game.
         }
 
         Ogre::Entity *getEntity() { return m_pEntity; }
+        Ogre::Node *getNode() { return m_pUnitNode; }
 
     protected:
         
@@ -84,21 +85,22 @@ namespace dsgame //Dungeon's Secret Game.
             dest.normalise();
             Ogre::Vector3 dir = getDirection();
             dir.normalise();
-
-            if(dir.directionEquals(dest,Ogre::Radian(Ogre::Degree(1.f))) == false)
+            
+            if(dir.directionEquals(dest,Ogre::Radian(Ogre::Degree(.5f))) == false)
             {
                 //se, após a rotação, o ângulo entre a direção e o destino for maior, significa que o certo
                 //era rotacionar para o outro lado, pois este está mais perto.
                 Ogre::Real init_angle = Ogre::Degree(dir.angleBetween(dest)).valueDegrees();
                 
-                Ogre::Real rot_angle = 1.f;
+                Ogre::Real rot_angle = 5.f;
                 m_DirAngle += Ogre::Degree(rot_angle);
                 Ogre::Real after_angle = Ogre::Degree(getDirection().angleBetween(dest)).valueDegrees();
                 m_DirAngle -= Ogre::Degree(rot_angle);
 
                 if(after_angle > init_angle)
-                    rot_angle = -1;
+                    rot_angle *= -1;
                 rotate(rot_angle);
+                
             }
             
             m_pUnitNode->translate(getDirection()*getSpeed()*timeSinceLastFrame);
@@ -106,7 +108,7 @@ namespace dsgame //Dungeon's Secret Game.
 
         bool shouldMove()
         {
-            return m_pUnitNode->getPosition().distance(m_Destination) >= .5f;
+            return m_pUnitNode->getPosition().distance(m_Destination) >= .05f;
         }
 
     protected:

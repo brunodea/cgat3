@@ -36,6 +36,7 @@ namespace appstate
 
     private:
         bool m_bQuit;
+        bool m_bRMousePressed;
 
         dsgame::HeroUnit *m_pHero;
 
