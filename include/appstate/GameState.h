@@ -6,6 +6,12 @@
 
 namespace appstate
 {
+    enum
+    {
+        GROUND_MASK = 0 << 1,
+        OBSTACLE_MASK = 1 << 1
+    };
+
     class GameState : public AppState
     {
     public:
@@ -39,7 +45,6 @@ namespace appstate
         bool m_bRMousePressed;
 
         dsgame::HeroUnit *m_pHero;
-
     }; //end of class GameState.
 
 } //end of namespace appstate.

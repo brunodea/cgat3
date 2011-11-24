@@ -18,9 +18,7 @@ void GameState::enter()
     m_pSceneMgr = OgreFramework::getSingletonPtr()->m_pRoot->createSceneManager(Ogre::ST_GENERIC, "GameSceneMgr");
     m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
     m_pSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-
-    //OgreFramework::getSingletonPtr()->m_pTrayMgr->hideCursor();
-
+    
     createScene();
 }
 
@@ -117,8 +115,29 @@ bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
         std::pair<bool, Ogre::Real> rayresult = mouseRay.intersects(m_pSceneMgr->getEntity("Chao")->getWorldBoundingBox());
         if(rayresult.first)
         {
-            Ogre::Vector3 position = mouseRay.getPoint(rayresult.second);
-            m_pHero->setDestination(position);
+            Ogre::RaySceneQuery *rsq = m_pSceneMgr->createRayQuery(mouseRay, OBSTACLE_MASK);
+            rsq->setSortByDistance(true,1);
+
+            Ogre::RaySceneQueryResult &result = rsq->execute();
+            Ogre::RaySceneQueryResult::iterator itr;
+
+            bool clicked_on_the_ground = true;
+            for(itr = result.begin(); itr != result.end(); itr++)
+            {
+                if(itr->movable)
+                {
+                    clicked_on_the_ground = false;
+                    break;
+                }
+            }
+            
+            if(clicked_on_the_ground)
+            {
+                Ogre::Vector3 position = mouseRay.getPoint(rayresult.second);
+                m_pHero->setDestination(position);
+
+                m_pSceneMgr->destroyQuery(rsq);
+            }
         }
     }
     OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(arg, id);
@@ -152,9 +171,19 @@ void GameState::createScene()
     dsl->parseDotScene("Level1.xml", "General", m_pSceneMgr, m_pSceneMgr->getRootSceneNode());
     delete dsl;
 
+
     m_pCamera = m_pSceneMgr->getCamera("HeroCam");
     OgreFramework::getSingletonPtr()->m_pViewport->setCamera(m_pCamera);
 
     m_pHero = new dsgame::HeroUnit(m_pSceneMgr->getEntity("HeroEntity"),m_pSceneMgr->getSceneNode("HeroNode"));
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Game Scene Created...");
+
+    for(int i = 1; i <= 57; i++)
+    {
+        Ogre::String nome = "Muro";
+        nome.append(Ogre::StringConverter::toString(i));
+        m_pSceneMgr->getEntity(nome)->setQueryFlags(OBSTACLE_MASK);
+    }
+    m_pSceneMgr->getEntity("Bau1")->setQueryFlags(OBSTACLE_MASK);
+    m_pSceneMgr->getEntity("Chao")->setQueryFlags(GROUND_MASK);
 }
