@@ -178,12 +178,12 @@ void GameState::createScene()
     m_pHero = new dsgame::HeroUnit(m_pSceneMgr->getEntity("HeroEntity"),m_pSceneMgr->getSceneNode("HeroNode"));
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Game Scene Created...");
 
-    /*for(int i = 1; i <= 57; i++)
+    for(int i = 1; i <= 57; i++)
     {
         Ogre::String nome = "Muro";
         nome.append(Ogre::StringConverter::toString(i));
         m_pSceneMgr->getEntity(nome)->setQueryFlags(OBSTACLE_MASK);
     }
-    m_pSceneMgr->getEntity("Bau1")->setQueryFlags(OBSTACLE_MASK);*/
-    //m_pSceneMgr->getEntity("Chao")->setQueryFlags(GROUND_MASK);
+    m_pSceneMgr->getEntity("Bau1")->setQueryFlags(OBSTACLE_MASK);
+    m_pSceneMgr->getEntity("Chao")->setQueryFlags(GROUND_MASK);
 }
