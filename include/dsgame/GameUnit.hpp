@@ -35,6 +35,8 @@ namespace dsgame //Dungeon's Secret Game.
 
         virtual void update(double timeSinceLastFrame)
         {
+            adjustDestinations();
+
             m_isMoving = shouldMove();
             if(m_isMoving)
                 move(timeSinceLastFrame);
@@ -45,7 +47,6 @@ namespace dsgame //Dungeon's Secret Game.
         }
 
         bool isMoving() { return m_isMoving; }
-        //void setMoving(bool moving) { m_isMoving = moving; }
 
         void rotate(Ogre::Degree angle) 
         { 
@@ -69,19 +70,54 @@ namespace dsgame //Dungeon's Secret Game.
 
         Ogre::Real getSpeed() { return m_Speed; }
         
-        void setDestination(const Ogre::Vector3 &dest)
-        {
-            m_Destination = dest;
-        }
-
         Ogre::Entity *getEntity() { return m_pEntity; }
         Ogre::Node *getNode() { return m_pUnitNode; }
+
+        bool hasNextDestination() { return !m_Destinations.empty(); }
+        Ogre::Vector3 getNextDestination() { return m_Destinations.at(0); }
+        void addDestination(const Ogre::Vector3 &p) { m_Destinations.push_back(p); }
+        void clearDestinations() { m_Destinations.clear(); }
+
+        void adjustDestinations()
+        {
+            if(!m_Destinations.empty())
+            {
+                Ogre::Vector3 dest = m_Destinations.at(0);
+                if(dest.distance(getNode()->getPosition()) < .5f) //se ja chegou no destino atual.
+                    m_Destinations.erase(m_Destinations.begin());
+            }
+            for(unsigned int i = m_Destinations.size()-1; i >= 0; i--)
+            {
+                Ogre::Vector3 dest = m_Destinations.at(i);
+                if(isVisible(dest))
+                {
+                    m_Destinations.erase(m_Destinations.begin(),m_Destinations.begin()+i);
+                    break;
+                }
+            }
+        }
+
+        bool isVisible(const Ogre::Vector3 &p)
+        {
+            Ogre::Ray ray(getNode()->getPosition(),p);
+            Ogre::RaySceneQuery *rsq = Ogre::Root::getSingletonPtr()->getSceneManager("GameSceneMgr")->createRayQuery(ray,OBSTACLE_MASK);
+            rsq->setSortByDistance(true,1);
+
+            bool visible = false;
+            if(rsq->execute().empty())
+                visible = true;
+            Ogre::Root::getSingletonPtr()->getSceneManager("GameSceneMgr")->destroyQuery(rsq);
+            return visible;
+        }
 
     protected:
         
         virtual void move(double timeSinceLastFrame)
         {
-            Ogre::Vector3 dest = m_Destination-m_pUnitNode->getPosition();
+            if(!hasNextDestination()) 
+                return;
+
+            Ogre::Vector3 dest = getNextDestination()-m_pUnitNode->getPosition();
             dest.normalise();
             Ogre::Vector3 dir = getDirection();
             dir.normalise();
@@ -109,7 +145,13 @@ namespace dsgame //Dungeon's Secret Game.
 
         bool shouldMove()
         {
-            return m_pUnitNode->getPosition().distance(m_Destination) >= .5f;
+            bool move = false;
+            if(hasNextDestination())
+            {
+                move = m_pUnitNode->getPosition().distance(getNextDestination()) >= .5f;
+            }
+
+            return move;
         }
 
     protected:
@@ -162,12 +204,12 @@ namespace dsgame //Dungeon's Secret Game.
             m_pUnitNode = unit_node;
 
             m_DirAngle = Ogre::Degree(0.f);
-            m_Destination = unit_node->getPosition();
+            m_Destinations.push_back(unit_node->getPosition());
         }
         
     private:
         Ogre::Vector3 m_Direction;
-        Ogre::Vector3 m_Destination;
+        std::vector<Ogre::Vector3> m_Destinations;
         Ogre::Real m_Speed;
         Ogre::Node *m_pUnitNode;
 
