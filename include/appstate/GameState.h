@@ -3,13 +3,15 @@
 
 #include "AppState.hpp"
 #include "dsgame/HeroUnit.hpp"
+#include <vector>
 
 namespace appstate
 {
-    enum
+    enum MaskEnum
     {
         GROUND_MASK = 0 << 1,
-        OBSTACLE_MASK = 1 << 1
+        OBSTACLE_MASK = 1 << 1,
+        DOOR_MASK = 2 << 1,
     };
 
     class GameState : public AppState
@@ -41,10 +43,14 @@ namespace appstate
         void createScene();
 
     private:
+        void adjustObjectsMasks(const Ogre::String &name, unsigned int num, MaskEnum mask);
+
+    private:
         bool m_bQuit;
         bool m_bRMousePressed;
 
         dsgame::HeroUnit *m_pHero;
+        std::vector<Ogre::Vector3> m_VPoints;
     }; //end of class GameState.
 
 } //end of namespace appstate.

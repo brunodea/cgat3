@@ -164,7 +164,7 @@ namespace dsgame //Dungeon's Secret Game.
             m_DirAngle = Ogre::Degree(0.f);
             m_Destination = unit_node->getPosition();
         }
-
+        
     private:
         Ogre::Vector3 m_Direction;
         Ogre::Vector3 m_Destination;
