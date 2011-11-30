@@ -4,16 +4,10 @@
 #include "AppState.hpp"
 #include "dsgame/HeroUnit.hpp"
 #include <vector>
+#include "macros.h"
 
 namespace appstate
 {
-    enum MaskEnum
-    {
-        GROUND_MASK = 0 << 1,
-        OBSTACLE_MASK = 1 << 1,
-        DOOR_MASK = 2 << 1,
-    };
-
     class GameState : public AppState
     {
     public:

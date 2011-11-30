@@ -6,6 +6,8 @@
 #include <OgreString.h>
 #include <OgreNode.h>
 #include "OgreFramework.hpp"
+#include "util/util.hpp"
+#include "macros.h"
 
 #include <fstream>
 #include <string>
@@ -36,7 +38,6 @@ namespace dsgame //Dungeon's Secret Game.
         virtual void update(double timeSinceLastFrame)
         {
             adjustDestinations();
-
             m_isMoving = shouldMove();
             if(m_isMoving)
                 move(timeSinceLastFrame);
@@ -80,34 +81,37 @@ namespace dsgame //Dungeon's Secret Game.
 
         void adjustDestinations()
         {
-            if(!m_Destinations.empty())
+            if(m_Destinations.empty())
+                return;
+            Ogre::Vector3 dest = m_Destinations.at(0);
+            if(dest.distance(getNode()->getPosition()) < .5f) //se ja chegou no destino atual.
             {
-                Ogre::Vector3 dest = m_Destinations.at(0);
-                if(dest.distance(getNode()->getPosition()) < .5f) //se ja chegou no destino atual.
-                    m_Destinations.erase(m_Destinations.begin());
+                m_Destinations.erase(m_Destinations.begin());
             }
-            for(unsigned int i = m_Destinations.size()-1; i >= 0; i--)
+
+            //if(m_Destinations.size() >= 1)
             {
-                Ogre::Vector3 dest = m_Destinations.at(i);
-                if(isVisible(dest))
+                for(auto &it = m_Destinations.end(); it != m_Destinations.begin(); it--)
                 {
-                    m_Destinations.erase(m_Destinations.begin(),m_Destinations.begin()+i);
-                    break;
+                    Ogre::Vector3 dest = *it;
+                    if(util::isVisible(getNode()->getPosition(),dest,"GameSceneMgr",OBSTACLE_MASK, Ogre::Vector3::UNIT_Y))
+                    {
+                        m_Destinations.erase(m_Destinations.begin(),it-1);
+                        break;
+                    }
                 }
+
+                /*for(unsigned int i = m_Destinations.size()-1; i >= 1; i--)
+                {
+                    Ogre::Vector3 dest = m_Destinations.at(i);
+                    
+                    if(util::isVisible(getNode()->getPosition(),dest,"GameSceneMgr",OBSTACLE_MASK, Ogre::Vector3::UNIT_Y))
+                    {
+                        m_Destinations.erase(m_Destinations.begin(),m_Destinations.begin()+i);
+                        break;
+                    }
+                }*/
             }
-        }
-
-        bool isVisible(const Ogre::Vector3 &p)
-        {
-            Ogre::Ray ray(getNode()->getPosition(),p);
-            Ogre::RaySceneQuery *rsq = Ogre::Root::getSingletonPtr()->getSceneManager("GameSceneMgr")->createRayQuery(ray,OBSTACLE_MASK);
-            rsq->setSortByDistance(true,1);
-
-            bool visible = false;
-            if(rsq->execute().empty())
-                visible = true;
-            Ogre::Root::getSingletonPtr()->getSceneManager("GameSceneMgr")->destroyQuery(rsq);
-            return visible;
         }
 
     protected:

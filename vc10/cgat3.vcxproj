@@ -94,6 +94,9 @@
     <ClInclude Include="..\include\dsgame\GameUnit.hpp" />
     <ClInclude Include="..\include\dsgame\HeroUnit.hpp" />
     <ClInclude Include="..\include\DungeonsSecretsApp.h" />
+    <ClInclude Include="..\include\macros.h" />
+    <ClInclude Include="..\include\util\util.hpp" />
+    <ClInclude Include="..\include\util\ViewPointsGraph.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

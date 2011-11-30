@@ -28,6 +28,9 @@
     <Filter Include="Header Files\Ogre\dsgame">
       <UniqueIdentifier>{46105552-1182-41b8-a93f-9bb30179bb07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Ogre\util">
+      <UniqueIdentifier>{56204369-6b25-4da3-af8f-863bd8b9a9a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -76,6 +79,15 @@
     </ClInclude>
     <ClInclude Include="..\include\dsgame\HeroUnit.hpp">
       <Filter>Header Files\Ogre\dsgame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\util\ViewPointsGraph.h">
+      <Filter>Header Files\Ogre\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\util\util.hpp">
+      <Filter>Header Files\Ogre\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\macros.h">
+      <Filter>Header Files\Ogre</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
