@@ -184,6 +184,7 @@ void GameState::createScene()
     OgreFramework::getSingletonPtr()->m_pViewport->setCamera(m_pCamera);
 
     m_pHero = new dsgame::HeroUnit(m_pSceneMgr->getEntity("HeroEntity"),m_pSceneMgr->getSceneNode("HeroNode"));
+    m_pHero->getEntity()->setQueryFlags(HERO_MASK);
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Game Scene Created...");
 
     adjustObjectsMasks("Muro", 105, OBSTACLE_MASK);

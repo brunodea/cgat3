@@ -5,7 +5,8 @@
 
 namespace util
 {
-    inline bool isVisible(const Ogre::Vector3 &origin, const Ogre::Vector3 &destination, const Ogre::String &scene_mgr_name, unsigned long mask, const Ogre::Vector3 &offset = Ogre::Vector3::ZERO)
+    inline bool isVisible(const Ogre::Vector3 &origin, const Ogre::Vector3 &destination, 
+        const Ogre::String &scene_mgr_name, unsigned long mask, const Ogre::Vector3 &offset = Ogre::Vector3::ZERO)
     {
         Ogre::Ray ray;
         ray.setOrigin(origin);
@@ -17,16 +18,13 @@ namespace util
         Ogre::RaySceneQueryResult &result = rsq->execute();
 
         bool visible = true;
-        if(result.size() > 1) //o primeiro que acha eh sempre a HeroEntity.
+        Ogre::RaySceneQueryResult::iterator itr;
+        for(itr = result.begin()+1; itr != result.end(); itr++)
         {
-            Ogre::RaySceneQueryResult::iterator itr;
-            for(itr = result.begin()+1; itr != result.end(); itr++)
+            if(itr->movable && itr->distance < origin.distance(destination))
             {
-                if(itr->movable && itr->distance < origin.distance(destination))
-                {
-                    visible = false;
-                    break;
-                }
+                visible = false;
+                break;
             }
         }
 
