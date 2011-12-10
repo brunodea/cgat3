@@ -89,17 +89,18 @@ namespace dsgame //Dungeon's Secret Game.
                 m_Destinations.erase(m_Destinations.begin());
             }
 
-            //if(m_Destinations.size() >= 1)
+            //if(m_Destinations.size() > 1)
             {
                 for(auto &it = m_Destinations.end(); it != m_Destinations.begin(); it--)
                 {
-                    Ogre::Vector3 dest = *it;
-                    if(util::isVisible(getNode()->getPosition(),dest,"GameSceneMgr",OBSTACLE_MASK, Ogre::Vector3::UNIT_Y))
+                    Ogre::Vector3 d = *it;
+                    if(util::isVisible(getNode()->getPosition(),d,"GameSceneMgr",OBSTACLE_MASK, Ogre::Vector3::UNIT_Y*2))
                     {
                         m_Destinations.erase(m_Destinations.begin(),it-1);
                         break;
                     }
                 }
+            }
 
                 /*for(unsigned int i = m_Destinations.size()-1; i >= 1; i--)
                 {
@@ -111,7 +112,6 @@ namespace dsgame //Dungeon's Secret Game.
                         break;
                     }
                 }*/
-            }
         }
 
     protected:

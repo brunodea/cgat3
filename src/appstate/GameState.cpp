@@ -1,5 +1,6 @@
 #include "appstate/GameState.h"
 #include "DotSceneLoader.hpp"
+#include "util/util.hpp"
 
 using namespace appstate;
 
@@ -141,7 +142,7 @@ bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
             if(clicked_on_the_ground)
             {
                 Ogre::Vector3 position = mouseRay.getPoint(rayresult.second);
-                //m_pHero->clearDestinations();
+                m_pHero->clearDestinations();
                 m_pHero->addDestination(position);
             }
 
