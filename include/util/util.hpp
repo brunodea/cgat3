@@ -13,7 +13,7 @@ namespace util
         ray.setDirection((destination-origin).normalisedCopy());
 
         Ogre::RaySceneQuery *rsq = Ogre::Root::getSingletonPtr()->getSceneManager(scene_mgr_name)->createRayQuery(ray,mask);
-        rsq->setSortByDistance(true);
+        rsq->setSortByDistance(true,1);
 
         Ogre::RaySceneQueryResult &result = rsq->execute();
 

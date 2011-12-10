@@ -5,6 +5,7 @@
 #include "dsgame/HeroUnit.hpp"
 #include <vector>
 #include "macros.h"
+#include "util/ViewPointsGraph.h"
 
 namespace appstate
 {
@@ -44,7 +45,8 @@ namespace appstate
         bool m_bRMousePressed;
 
         dsgame::HeroUnit *m_pHero;
-        std::vector<Ogre::Vector3> m_VPoints;
+        util::ViewPointsGraph m_ViewPointsGraph;
+
     }; //end of class GameState.
 
 } //end of namespace appstate.

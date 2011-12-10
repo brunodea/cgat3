@@ -5,7 +5,7 @@
 using namespace appstate;
 
 GameState::GameState()
-    : m_bQuit(false), m_pHero(0), m_bRMousePressed(false), m_VPoints()
+    : m_bQuit(false), m_pHero(0), m_bRMousePressed(false), m_ViewPointsGraph()
 {
 }
 
@@ -193,12 +193,14 @@ void GameState::createScene()
 
     m_pSceneMgr->getEntity("Chao")->setQueryFlags(GROUND_MASK);
     
+    std::vector<Ogre::Vector3> points;
     for(int i = 1; i <= 32; i++)
     {
         Ogre::String nome = "ViewPoint";
         nome.append(Ogre::StringConverter::toString(i));
-        m_VPoints.push_back(m_pSceneMgr->getSceneNode(nome)->getPosition());
+        points.push_back(m_pSceneMgr->getSceneNode(nome)->getPosition());
     }
+    m_ViewPointsGraph.createGraph(points);
 }
 
 void GameState::adjustObjectsMasks(const Ogre::String &name, unsigned int num, MaskEnum mask)
