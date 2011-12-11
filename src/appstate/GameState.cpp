@@ -53,7 +53,6 @@ void GameState::update(double timeSinceLastFrame)
         return;
     }
     
-    m_pHero->getInput();
     m_pHero->update(timeSinceLastFrame);
     
     m_pCamera->lookAt(m_pHero->getNode()->getPosition());
@@ -90,12 +89,12 @@ bool GameState::mouseMoved(const OIS::MouseEvent &arg)
     }
     else
     {
-        /*Ogre::Real valz = -.5f*Ogre::Math::Sign(arg.state.Z.rel);
         Ogre::Real dist = m_pCamera->getPosition().distance(m_pHero->getNode()->getPosition());
-        if(dist <= 2.f || dist >= 100.f)
+        Ogre::Real valz = -.5f*Ogre::Math::Sign(arg.state.Z.rel)*dist/10.f;
+        if((dist <= 10.f && valz < 0.f) || (dist >= 100.f && valz > 0.f))
             valz = 0.f;
         Ogre::Vector3 dir = Ogre::Vector3(0.f,0.f,valz);
-        m_pCamera->moveRelative(dir);*/
+        m_pCamera->moveRelative(dir);
     }
 
     if(OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseMove(arg)) return true;
@@ -112,12 +111,11 @@ bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
         m_bRMousePressed = true;
     }
     else if(id == OIS::MB_Left)
-    {    
-
+    {
         if(!m_ViewPointsGraph.isCreated())
         {
             std::vector<Ogre::Vector3> points;
-            for(int i = 1; i <= 32; i++)
+            for(int i = 1; i <= 35; i++)
             {
                 Ogre::String nome = "ViewPoint";
                 nome.append(Ogre::StringConverter::toString(i));
@@ -126,41 +124,7 @@ bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
             m_ViewPointsGraph.createGraph(points);
         }
 
-        Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
-        Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
-           
-        Ogre::Real offsetX = arg.state.X.abs / screenWidth;
-        Ogre::Real offsetY = arg.state.Y.abs / screenHeight;
-
-        Ogre::Ray mouseRay = m_pCamera->getCameraToViewportRay(offsetX, offsetY);
-        std::pair<bool, Ogre::Real> rayresult = mouseRay.intersects(m_pSceneMgr->getEntity("Chao")->getWorldBoundingBox());
-        if(rayresult.first)
-        {
-            Ogre::RaySceneQuery *rsq = m_pSceneMgr->createRayQuery(mouseRay, OBSTACLE_MASK);
-            rsq->setSortByDistance(true,1);
-
-            Ogre::RaySceneQueryResult &result = rsq->execute();
-            Ogre::RaySceneQueryResult::iterator itr;
-
-            bool clicked_on_the_ground = true;
-            for(itr = result.begin(); itr != result.end(); itr++)
-            {
-                if(itr->movable)
-                {
-                    clicked_on_the_ground = false;
-                    break;
-                }
-            }
-            
-            if(clicked_on_the_ground)
-            {
-                Ogre::Vector3 position = mouseRay.getPoint(rayresult.second);
-                m_pHero->clearDestinations();
-                m_pHero->addDestinations(m_ViewPointsGraph.pathFindingAStar(m_pHero->getNode()->getPosition(),position));
-            }
-
-            m_pSceneMgr->destroyQuery(rsq);
-        }
+        m_pHero->getInput(&m_ViewPointsGraph, arg, id);
     }
     OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(arg, id);
     return true;
@@ -203,9 +167,9 @@ void GameState::createScene()
     adjustObjectsMasks("Muro", 105, OBSTACLE_MASK);
     adjustObjectsMasks("Door", 3, DOOR_MASK);
     adjustObjectsMasks("Bau", 7, OBSTACLE_MASK);
+    adjustObjectsMasks("Ogre", 1, ENEMY_MASK);
 
-    m_pSceneMgr->getEntity("Chao")->setQueryFlags(GROUND_MASK);
-    
+    m_pSceneMgr->getEntity("Chao")->setQueryFlags(GROUND_MASK);    
 }
 
 void GameState::adjustObjectsMasks(const Ogre::String &name, unsigned int num, MaskEnum mask)

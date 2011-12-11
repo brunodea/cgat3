@@ -32,6 +32,7 @@ namespace util
                 Node *n = new Node();
                 n->position = orig;
                 n->m_Neighbors = std::vector<Node *>();
+                n->m_bVisited = false;
                 m_Nodes.push_back(n);
             }
 
@@ -59,7 +60,8 @@ namespace util
                 }
             }
             //result.push_back(closest_visible->position);
-            std::vector<Node *> v = astar(closest_visible, 0, dest);
+            std::vector<Node *> v = astar(closest_visible, dest);
+            unvisitNodes();
             for(auto& it = v.begin(); it != v.end(); it++)
             {
                 result.push_back((*it)->position);
@@ -75,6 +77,7 @@ namespace util
         {
             Ogre::Vector3 position;
             std::vector<Node *> m_Neighbors;
+            bool m_bVisited;
         }; //end of struct Node.
 
         void adjustNeighbors(Node *node)
@@ -91,8 +94,10 @@ namespace util
             }
         }
         
-        std::vector<Node *> astar(Node *n, Node *last_node, const Ogre::Vector3 &dest)
+        std::vector<Node *> astar(Node *n, const Ogre::Vector3 &dest)
         {
+            n->m_bVisited = true;
+            //OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(n->position));
             if(n == 0)
                 return std::vector<Node *>();
             Ogre::Vector3 nodepos = n->position;
@@ -112,14 +117,14 @@ namespace util
                     Ogre::Real heuristic = npos.distance(dest);
                     Ogre::Real weight = n->position.distance(npos);
 
-                    if(weight + heuristic < best_func && *node_it != last_node)
+                    if(weight + heuristic < best_func && (*node_it)->m_bVisited == false)
                     {
                         best_func = weight + heuristic;
                         result = *node_it;
                     }
                 }
                 
-                std::vector<Node *> v = astar(result, n, dest);
+                std::vector<Node *> v = astar(result, dest);
                 v.insert(v.begin(),n);
                 return v;
             }
@@ -130,6 +135,14 @@ namespace util
             for(auto& it = m_Nodes.begin(); it != m_Nodes.end(); it++)
                 delete *it;
             m_bGraphIsCreated = false;
+        }
+
+        void unvisitNodes()
+        {
+            for(auto& it = m_Nodes.begin(); it != m_Nodes.end(); it++)
+            {
+                (*it)->m_bVisited = false;
+            }
         }
 
     private:

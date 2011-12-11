@@ -37,6 +37,6 @@ namespace util
     {
         return isVisible(origin, destination, "GameSceneMgr", OBSTACLE_MASK, Ogre::Vector3::UNIT_Y);
     }
-
+    
 } //end of namespace util.
 #endif

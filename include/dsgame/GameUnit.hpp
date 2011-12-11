@@ -102,7 +102,7 @@ namespace dsgame //Dungeon's Secret Game.
                 /*for(auto &it = m_Destinations.end(); it != m_Destinations.begin(); it--)
                 {
                     Ogre::Vector3 d = *it;
-                    if(util::isVisible(getNode()->getPosition(),d,"GameSceneMgr",OBSTACLE_MASK, Ogre::Vector3::UNIT_Y*2))
+                    if(util::isVisible(getNode()->getPosition(),d))
                     {
                         m_Destinations.erase(m_Destinations.begin(),it-1);
                         break;
