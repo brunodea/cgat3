@@ -2,6 +2,7 @@
 #define _CGA_T3_UTIL_HPP_
 
 #include "OgreFramework.hpp"
+#include "macros.h"
 
 namespace util
 {
@@ -13,13 +14,13 @@ namespace util
         ray.setDirection((destination-origin).normalisedCopy());
 
         Ogre::RaySceneQuery *rsq = Ogre::Root::getSingletonPtr()->getSceneManager(scene_mgr_name)->createRayQuery(ray,mask);
-        rsq->setSortByDistance(true,1);
+        rsq->setSortByDistance(true);
 
         Ogre::RaySceneQueryResult &result = rsq->execute();
 
         bool visible = true;
         Ogre::RaySceneQueryResult::iterator itr;
-        for(itr = result.begin()+1; itr != result.end(); itr++)
+        for(itr = result.begin(); itr != result.end(); itr++)
         {
             if(itr->movable && itr->distance < origin.distance(destination))
             {
@@ -30,6 +31,11 @@ namespace util
 
         Ogre::Root::getSingletonPtr()->getSceneManager(scene_mgr_name)->destroyQuery(rsq);
         return visible;
+    }
+
+    inline bool isVisible(const Ogre::Vector3 &origin, const Ogre::Vector3 &destination)
+    {
+        return isVisible(origin, destination, "GameSceneMgr", OBSTACLE_MASK, Ogre::Vector3::UNIT_Y);
     }
 
 } //end of namespace util.
