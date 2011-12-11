@@ -12,7 +12,7 @@ namespace util
     {
     public:
         ViewPointsGraph()
-            : m_Nodes()
+            : m_Nodes(), m_bGraphIsCreated(false)
         {
         }
 
@@ -20,6 +20,8 @@ namespace util
         {
             erase();
         }
+
+        bool isCreated() { return m_bGraphIsCreated; }
         
         void createGraph(const std::vector<Ogre::Vector3> &points)
         {
@@ -29,24 +31,15 @@ namespace util
                 Ogre::Vector3 orig = *it1;
                 Node *n = new Node();
                 n->position = orig;
+                n->m_Neighbors = std::vector<Node *>();
                 m_Nodes.push_back(n);
             }
 
-            for(auto& it1 = m_Nodes.begin(); it1 != m_Nodes.end(); it1++)
+            for(auto& it = m_Nodes.begin(); it != m_Nodes.end(); it++)
             {
-                Node *n = *it1;
-                for(auto& it2 = m_Nodes.begin(); it2 != m_Nodes.end(); it2++)
-                {
-                    Ogre::Vector3 dest = (*it2)->position;
-                    if(n->position != dest)
-                    {
-                        if(util::isVisible(n->position,dest,"GameSceneMgr",OBSTACLE_MASK,Ogre::Vector3::UNIT_Y))
-                        {
-                            n->m_Neighbors.push_back(*it2);
-                        }
-                    }
-                }
+                adjustNeighbors(*it);
             }
+            m_bGraphIsCreated = true;
         }
 
         std::vector<Ogre::Vector3> pathFindingAStar(const Ogre::Vector3 &curr_pos, const Ogre::Vector3 &dest)
