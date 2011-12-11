@@ -47,23 +47,24 @@ namespace util
             std::vector<Ogre::Vector3> result;
             if(m_Nodes.size() < 2)
                 return result;
-
-            Node *closest_visible = m_Nodes.at(0);
-            for(auto& node_it = m_Nodes.begin()+1; node_it != m_Nodes.end(); node_it++)
+            Node *closest_visible = 0;
+            Ogre::Real cd = 99999.f;
+            for(auto& node_it = m_Nodes.begin(); node_it != m_Nodes.end(); node_it++)
             {
                 Ogre::Vector3 &pos = (*node_it)->position;
-                if(util::isVisible(curr_pos,pos,"GameSceneMgr",OBSTACLE_MASK,Ogre::Vector3::UNIT_Y) &&
-                   pos.distance(curr_pos) < closest_visible->position.distance(curr_pos))
+                if(util::isVisible(curr_pos,pos) && pos.distance(curr_pos) < cd)
                 {
+                    cd = pos.distance(curr_pos);
                     closest_visible = *node_it;
                 }
             }
-
-            std::vector<Node *> v = bestNodeAStar(closest_visible,dest);
+            //result.push_back(closest_visible->position);
+            std::vector<Node *> v = astar(closest_visible, 0, dest);
             for(auto& it = v.begin(); it != v.end(); it++)
             {
                 result.push_back((*it)->position);
             }
+            result.push_back(dest);
 
             return result;
         }
@@ -75,6 +76,20 @@ namespace util
             Ogre::Vector3 position;
             std::vector<Node *> m_Neighbors;
         }; //end of struct Node.
+
+        void adjustNeighbors(Node *node)
+        {  
+            OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(node->position));
+            for(auto& it = m_Nodes.begin(); it != m_Nodes.end(); it++)
+            {
+                Node *n = *it;
+                if(n != node && util::isVisible(node->position,n->position))
+                {
+                    OgreFramework::getSingletonPtr()->m_pLog->logMessage("VEIO");
+                    node->m_Neighbors.push_back(n);
+                }
+            }
+        }
         
         std::vector<Node *> bestNodeAStar(Node *n, const Ogre::Vector3 &dest)
         {
