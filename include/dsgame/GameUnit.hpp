@@ -78,6 +78,10 @@ namespace dsgame //Dungeon's Secret Game.
         Ogre::Vector3 getNextDestination() { return m_Destinations.at(0); }
         void addDestination(const Ogre::Vector3 &p) { m_Destinations.push_back(p); }
         void clearDestinations() { m_Destinations.clear(); }
+        void addDestinations(const std::vector<Ogre::Vector3> &dests)
+        {
+            m_Destinations.insert(m_Destinations.end(),dests.begin(),dests.end());
+        }
 
         void adjustDestinations()
         {
@@ -91,7 +95,7 @@ namespace dsgame //Dungeon's Secret Game.
 
             //if(m_Destinations.size() > 1)
             {
-                for(auto &it = m_Destinations.end(); it != m_Destinations.begin(); it--)
+                /*for(auto &it = m_Destinations.end(); it != m_Destinations.begin(); it--)
                 {
                     Ogre::Vector3 d = *it;
                     if(util::isVisible(getNode()->getPosition(),d,"GameSceneMgr",OBSTACLE_MASK, Ogre::Vector3::UNIT_Y*2))
@@ -99,7 +103,7 @@ namespace dsgame //Dungeon's Secret Game.
                         m_Destinations.erase(m_Destinations.begin(),it-1);
                         break;
                     }
-                }
+                }*/
             }
 
                 /*for(unsigned int i = m_Destinations.size()-1; i >= 1; i--)
