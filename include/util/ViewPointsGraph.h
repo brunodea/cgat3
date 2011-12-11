@@ -129,10 +129,13 @@ namespace util
         {
             for(auto& it = m_Nodes.begin(); it != m_Nodes.end(); it++)
                 delete *it;
+            m_bGraphIsCreated = false;
         }
 
     private:
         std::vector<Node *> m_Nodes;
+        bool m_bGraphIsCreated;
+
     }; //end of class ViewPointsGraph.
 
 } //end of namespace util.
