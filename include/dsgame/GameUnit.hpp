@@ -93,8 +93,12 @@ namespace dsgame //Dungeon's Secret Game.
                 m_Destinations.erase(m_Destinations.begin());
             }
 
-            //if(m_Destinations.size() > 1)
+            
+            if(m_Destinations.size() > 1)
             {
+                auto& it = m_Destinations.begin()+1;
+                if(util::isVisible(getNode()->getPosition(),*it))
+                    m_Destinations.erase(m_Destinations.begin());
                 /*for(auto &it = m_Destinations.end(); it != m_Destinations.begin(); it--)
                 {
                     Ogre::Vector3 d = *it;
