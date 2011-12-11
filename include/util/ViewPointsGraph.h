@@ -91,10 +91,12 @@ namespace util
             }
         }
         
-        std::vector<Node *> bestNodeAStar(Node *n, const Ogre::Vector3 &dest)
+        std::vector<Node *> astar(Node *n, Node *last_node, const Ogre::Vector3 &dest)
         {
+            if(n == 0)
+                return std::vector<Node *>();
             Ogre::Vector3 nodepos = n->position;
-            if(util::isVisible(nodepos,dest,"GameSceneMgr",OBSTACLE_MASK,Ogre::Vector3::UNIT_Y))
+            if(util::isVisible(nodepos,dest))
             {
                 std::vector<Node *> v;
                 v.push_back(n);
@@ -103,22 +105,22 @@ namespace util
             else
             {
                 Node *result = 0;
-                Ogre::Real best_func = 9999.f;
+                Ogre::Real best_func = 999999.f;
                 for(auto& node_it = n->m_Neighbors.begin(); node_it != n->m_Neighbors.end(); node_it++)
                 {
                     Ogre::Vector3 npos = (*node_it)->position;
                     Ogre::Real heuristic = npos.distance(dest);
                     Ogre::Real weight = n->position.distance(npos);
 
-                    if(weight + heuristic < best_func)
+                    if(weight + heuristic < best_func && *node_it != last_node)
                     {
                         best_func = weight + heuristic;
                         result = *node_it;
                     }
                 }
                 
-                std::vector<Node *> v = bestNodeAStar(result,dest);
-                v.insert(v.begin(),result);
+                std::vector<Node *> v = astar(result, n, dest);
+                v.insert(v.begin(),n);
                 return v;
             }
         }
