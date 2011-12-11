@@ -113,6 +113,19 @@ bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
     }
     else if(id == OIS::MB_Left)
     {    
+
+        if(!m_ViewPointsGraph.isCreated())
+        {
+            std::vector<Ogre::Vector3> points;
+            for(int i = 1; i <= 32; i++)
+            {
+                Ogre::String nome = "ViewPoint";
+                nome.append(Ogre::StringConverter::toString(i));
+                points.push_back(m_pSceneMgr->getSceneNode(nome)->getPosition());
+            }
+            m_ViewPointsGraph.createGraph(points);
+        }
+
         Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
         Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
            
@@ -143,7 +156,7 @@ bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
             {
                 Ogre::Vector3 position = mouseRay.getPoint(rayresult.second);
                 m_pHero->clearDestinations();
-                m_pHero->addDestination(position);
+                m_pHero->addDestinations(m_ViewPointsGraph.pathFindingAStar(m_pHero->getNode()->getPosition(),position));
             }
 
             m_pSceneMgr->destroyQuery(rsq);
@@ -193,14 +206,6 @@ void GameState::createScene()
 
     m_pSceneMgr->getEntity("Chao")->setQueryFlags(GROUND_MASK);
     
-    std::vector<Ogre::Vector3> points;
-    for(int i = 1; i <= 32; i++)
-    {
-        Ogre::String nome = "ViewPoint";
-        nome.append(Ogre::StringConverter::toString(i));
-        points.push_back(m_pSceneMgr->getSceneNode(nome)->getPosition());
-    }
-    m_ViewPointsGraph.createGraph(points);
 }
 
 void GameState::adjustObjectsMasks(const Ogre::String &name, unsigned int num, MaskEnum mask)
