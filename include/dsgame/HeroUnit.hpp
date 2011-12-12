@@ -47,14 +47,19 @@ namespace dsgame
                         handleClickedOnGround(vpg, arg);
                     else if(mask == ENEMY_MASK)
                     {
+                        if(m_pEnemyTarget != 0)
+                            return;
                         notarget = false;
                         m_pEnemyTarget = obj;
                         clearDestinations();
 
-                        const Ogre::Vector3& dest = obj->getParentNode()->getParent()->getPosition();
-                        Ogre::Real offset = obj->getBoundingRadius();
+                        Ogre::Vector3 pos = getNode()->getPosition();
+                        Ogre::Vector3 dest = obj->getParentNode()->getParent()->getPosition();
+
+                        dest += (pos-dest).normalisedCopy()*obj->getBoundingRadius()*.3f;
+
                         //OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(dest));
-                        addDestinations(vpg->pathFindingAStar(getNode()->getPosition(),dest+Ogre::Vector3(offset,0.f,offset)));
+                        addDestinations(vpg->pathFindingAStar(pos,dest));
                     }
 
                     if(notarget)
