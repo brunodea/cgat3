@@ -34,6 +34,9 @@
     <Filter Include="Source Files\Ogre\util">
       <UniqueIdentifier>{3f13550f-3ed4-4a5a-8cf2-c4deeb774794}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Ogre\dsgame">
+      <UniqueIdentifier>{5a23e4d9-a9a0-46e4-97f9-aebe75d7d994}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -56,6 +59,9 @@
     </ClCompile>
     <ClCompile Include="..\src\util\ViewPointsGraph.cpp">
       <Filter>Source Files\Ogre\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dsgame\GameUnit.cpp">
+      <Filter>Source Files\Ogre\dsgame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

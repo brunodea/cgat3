@@ -20,9 +20,7 @@ namespace dsgame //Dungeon's Secret Game.
     {
     public:
         GameUnit(Ogre::Entity *entity, Ogre::Node *unit_node);
-        
         GameUnit(const Ogre::Vector3 &dir, const Ogre::Real &speed, Ogre::Entity *entity, Ogre::Node *unit_node);
-
         GameUnit(const Ogre::String &filename, Ogre::Entity *entity, Ogre::Node *unit_node);
 
         virtual void update(double timeSinceLastFrame);

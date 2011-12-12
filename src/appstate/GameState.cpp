@@ -115,7 +115,7 @@ bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
         if(!m_ViewPointsGraph.isCreated())
         {
             std::vector<Ogre::Vector3> points;
-            for(int i = 1; i <= 35; i++)
+            for(int i = 1; i <= 42; i++)
             {
                 Ogre::String nome = "ViewPoint";
                 nome.append(Ogre::StringConverter::toString(i));
