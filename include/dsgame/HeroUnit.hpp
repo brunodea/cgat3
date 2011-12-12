@@ -50,9 +50,11 @@ namespace dsgame
                         notarget = false;
                         m_pEnemyTarget = obj;
                         clearDestinations();
-                        
-                        //DANDO SEG FAULT AQUI.
-                        addDestinations(vpg->pathFindingAStar(getNode()->getPosition(),obj->getParentSceneNode()->getPosition()));
+
+                        const Ogre::Vector3& dest = obj->getParentNode()->getParent()->getPosition();
+                        Ogre::Real offset = obj->getBoundingRadius();
+                        //OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(dest));
+                        addDestinations(vpg->pathFindingAStar(getNode()->getPosition(),dest+Ogre::Vector3(offset,0.f,offset)));
                     }
 
                     if(notarget)

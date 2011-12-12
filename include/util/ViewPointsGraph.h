@@ -97,7 +97,7 @@ namespace util
         std::vector<Node *> astar(Node *n, const Ogre::Vector3 &dest)
         {
             n->m_bVisited = true;
-            //OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(n->position));
+            OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(n->position)+ " DEST: "+Ogre::StringConverter::toString(dest));
             if(n == 0)
                 return std::vector<Node *>();
             Ogre::Vector3 nodepos = n->position;
