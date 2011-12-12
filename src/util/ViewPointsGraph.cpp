@@ -1,5 +1,3 @@
-#pragma once
-
 #include "util/ViewPointsGraph.h"
 
 using namespace util;
@@ -64,13 +62,13 @@ std::vector<Ogre::Vector3> ViewPointsGraph::pathFindingAStar(const Ogre::Vector3
 
 void ViewPointsGraph::adjustNeighbors(Node *node)
 {
-    OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(node->position));
+    //OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(node->position));
     for(auto& it = m_Nodes.begin(); it != m_Nodes.end(); it++)
     {
         Node *n = *it;
         if(n != node && util::isVisible(node->position,n->position))
         {
-            OgreFramework::getSingletonPtr()->m_pLog->logMessage("VEIO");
+            //OgreFramework::getSingletonPtr()->m_pLog->logMessage("VEIO");
             node->m_Neighbors.push_back(n);
         }
     }
@@ -79,7 +77,7 @@ void ViewPointsGraph::adjustNeighbors(Node *node)
 std::vector<ViewPointsGraph::Node *> ViewPointsGraph::astar(Node *n, const Ogre::Vector3 &dest)
 {
     n->m_bVisited = true;
-    OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(n->position)+ " DEST: "+Ogre::StringConverter::toString(dest));
+    //OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(n->position)+ " DEST: "+Ogre::StringConverter::toString(dest));
     if(n == 0)
         return std::vector<Node *>();
     Ogre::Vector3 nodepos = n->position;

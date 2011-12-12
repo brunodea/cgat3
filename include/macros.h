@@ -11,6 +11,14 @@ typedef enum
     ENEMY_MASK = 5 << 1,
 } MaskEnum;
 
+typedef enum
+{
+    IDLE_STATE = 0,
+    SEEK_STATE,
+    ATTACK_STATE,
+    RETURN_STATE,
+    LIFE_LOW_STATE
+} FSMStateEnum;
 
 #endif
 

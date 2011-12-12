@@ -17,7 +17,6 @@ namespace dsgame
         void adjustAnimationState(double timeSinceLastFrame);
         void getInput(util::ViewPointsGraph *vpg, const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
-
     private:
         void handleClickedOnGround(util::ViewPointsGraph *vpg, const OIS::MouseEvent &arg);
         Ogre::MovableObject *clickedOn(const OIS::MouseEvent &arg);

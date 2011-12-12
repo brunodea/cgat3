@@ -26,6 +26,16 @@ namespace dsgame //Dungeon's Secret Game.
         virtual void update(double timeSinceLastFrame);
 
         bool isMoving() { return m_isMoving; }
+        
+        bool isAlive() { return m_Health > 0.f; }
+        void loseHealth(Ogre::Real amount) 
+        { 
+            m_Health -= amount;
+            if(m_Health < 0.f)
+                m_Health = 0.f;
+        }
+
+        Ogre::Real damage() { return m_Damage; }
 
         void rotate(Ogre::Degree angle);
         void rotate(Ogre::Real degrees);
@@ -38,6 +48,14 @@ namespace dsgame //Dungeon's Secret Game.
         Ogre::Entity *getEntity() { return m_pEntity; }
         Ogre::Node *getNode() { return m_pUnitNode; }
 
+        Ogre::AnimationState *getAnimState() { return m_pAnimState; }
+        void setAnimState(const Ogre::String &anim_name, bool loop=true)
+        {
+            m_pAnimState = m_pEntity->getAnimationState(anim_name);
+            m_pAnimState->setLoop(loop);
+            m_pAnimState->setEnabled(true);
+        }
+
         bool hasNextDestination() { return !m_Destinations.empty(); }
         Ogre::Vector3 getNextDestination() { return m_Destinations.at(0); }
         void addDestination(const Ogre::Vector3 &p) { m_Destinations.push_back(p); }
@@ -48,17 +66,19 @@ namespace dsgame //Dungeon's Secret Game.
         }
 
         void adjustDestinations();
+        bool shouldMove();
 
     protected:
-        
         virtual void move(double timeSinceLastFrame);
-        bool shouldMove();
 
     protected:
         bool m_isMoving;
         Ogre::Degree m_DirAngle;
         Ogre::AnimationState *m_pAnimState;
         Ogre::Entity *m_pEntity;
+
+        Ogre::Real m_Health; //quanto de vida tem.
+        Ogre::Real m_Damage; //quanto de dano causa.
 
     private:
         void fillGameUnitByFile(const Ogre::String &filename);

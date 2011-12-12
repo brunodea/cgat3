@@ -81,7 +81,10 @@
     <ClCompile Include="..\dependencies\DotSceneLoader.cpp" />
     <ClCompile Include="..\dependencies\OgreFramework.cpp" />
     <ClCompile Include="..\src\appstate\GameState.cpp" />
+    <ClCompile Include="..\src\dsgame\Enemies\FSM.cpp" />
+    <ClCompile Include="..\src\dsgame\Enemies\NPCUnit.cpp" />
     <ClCompile Include="..\src\dsgame\GameUnit.cpp" />
+    <ClCompile Include="..\src\dsgame\HeroUnit.cpp" />
     <ClCompile Include="..\src\DungeonsSecretsApp.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\util\ViewPointsGraph.cpp" />
@@ -93,6 +96,12 @@
     <ClInclude Include="..\dependencies\OgreFramework.hpp" />
     <ClInclude Include="..\dependencies\rapidxml.hpp" />
     <ClInclude Include="..\include\appstate\GameState.h" />
+    <ClInclude Include="..\include\dsgame\Enemies\FSM.hpp" />
+    <ClInclude Include="..\include\dsgame\Enemies\FSMFactory.hpp" />
+    <ClInclude Include="..\include\dsgame\Enemies\FSMState.hpp" />
+    <ClInclude Include="..\include\dsgame\Enemies\NormalOgre\NormalOgreFSM.hpp" />
+    <ClInclude Include="..\include\dsgame\Enemies\NormalOgre\NormalOgreUnit.hpp" />
+    <ClInclude Include="..\include\dsgame\Enemies\NPCUnit.hpp" />
     <ClInclude Include="..\include\dsgame\GameUnit.hpp" />
     <ClInclude Include="..\include\dsgame\HeroUnit.hpp" />
     <ClInclude Include="..\include\DungeonsSecretsApp.h" />

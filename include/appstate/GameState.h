@@ -6,6 +6,7 @@
 #include <vector>
 #include "macros.h"
 #include "util/ViewPointsGraph.h"
+#include "dsgame/Enemies/NormalOgre/NormalOgreUnit.hpp"
 
 namespace appstate
 {
@@ -45,6 +46,8 @@ namespace appstate
         bool m_bRMousePressed;
 
         dsgame::HeroUnit *m_pHero;
+        dsgame::npc::NormalOgreUnit *m_pOgre;
+        
         util::ViewPointsGraph m_ViewPointsGraph;
 
     }; //end of class GameState.

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "dsgame/GameUnit.hpp"
 
 using namespace dsgame;
@@ -28,6 +26,8 @@ void GameUnit::init(const Ogre::Vector3 &dir, const Ogre::Real &speed, Ogre::Ent
     m_isMoving = false;
     m_pAnimState = 0;
     m_pUnitNode = unit_node;
+    m_Health = 0.f;
+    m_Damage = 0.f;
 
     m_DirAngle = Ogre::Degree(0.f);
     m_Destinations.push_back(unit_node->getPosition());
@@ -146,6 +146,14 @@ void GameUnit::fillGameUnitByFile(const Ogre::String &filename)
                 else if(sp[0] == "speed")
                 {
                     m_Speed = Ogre::StringConverter::parseReal(sp[1]);
+                }
+                else if(sp[0] == "health")
+                {
+                    m_Health = Ogre::StringConverter::parseReal(sp[1]);
+                }
+                else if(sp[0] == "damage")
+                {
+                    m_Damage = Ogre::StringConverter::parseReal(sp[1]);
                 }
             }
         }

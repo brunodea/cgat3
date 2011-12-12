@@ -5,7 +5,7 @@
 using namespace appstate;
 
 GameState::GameState()
-    : m_bQuit(false), m_pHero(0), m_bRMousePressed(false), m_ViewPointsGraph()
+    : m_bQuit(false), m_pHero(0), m_bRMousePressed(false), m_ViewPointsGraph(), m_pOgre(0)
 {
 }
 
@@ -54,6 +54,9 @@ void GameState::update(double timeSinceLastFrame)
     }
     
     m_pHero->update(timeSinceLastFrame);
+
+    m_pOgre->behave();
+    m_pOgre->update(timeSinceLastFrame);
     
     m_pCamera->lookAt(m_pHero->getNode()->getPosition());
     if(m_pHero->isMoving())
@@ -162,6 +165,9 @@ void GameState::createScene()
 
     m_pHero = new dsgame::HeroUnit(m_pSceneMgr->getEntity("HeroEntity"),m_pSceneMgr->getSceneNode("HeroNode"));
     m_pHero->getEntity()->setQueryFlags(HERO_MASK);
+
+    m_pOgre = new dsgame::npc::NormalOgreUnit(m_pSceneMgr->getEntity("Ogre1"),m_pSceneMgr->getSceneNode("OgreNode1"));
+
     OgreFramework::getSingletonPtr()->m_pLog->logMessage("Game Scene Created...");
 
     adjustObjectsMasks("Muro", 105, OBSTACLE_MASK);

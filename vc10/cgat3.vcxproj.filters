@@ -37,6 +37,15 @@
     <Filter Include="Source Files\Ogre\dsgame">
       <UniqueIdentifier>{5a23e4d9-a9a0-46e4-97f9-aebe75d7d994}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Ogre\dsgame\Enemies">
+      <UniqueIdentifier>{ffdc8d20-2e14-42ab-ac99-1cf9ef79c117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Ogre\dsgame\Enemies\NormalOgre">
+      <UniqueIdentifier>{57695f0d-5c33-4f52-b724-93789eed4fc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Ogre\dsgame\Enemies">
+      <UniqueIdentifier>{f31c4683-44df-42e9-aec7-3331844d8fe3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -61,6 +70,15 @@
       <Filter>Source Files\Ogre\util</Filter>
     </ClCompile>
     <ClCompile Include="..\src\dsgame\GameUnit.cpp">
+      <Filter>Source Files\Ogre\dsgame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dsgame\HeroUnit.cpp">
+      <Filter>Source Files\Ogre\dsgame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dsgame\Enemies\FSM.cpp">
+      <Filter>Source Files\Ogre\dsgame\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dsgame\Enemies\NPCUnit.cpp">
       <Filter>Source Files\Ogre\dsgame</Filter>
     </ClCompile>
   </ItemGroup>
@@ -100,6 +118,24 @@
     </ClInclude>
     <ClInclude Include="..\include\macros.h">
       <Filter>Header Files\Ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dsgame\Enemies\NPCUnit.hpp">
+      <Filter>Header Files\Ogre\dsgame\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dsgame\Enemies\FSM.hpp">
+      <Filter>Header Files\Ogre\dsgame\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dsgame\Enemies\FSMFactory.hpp">
+      <Filter>Header Files\Ogre\dsgame\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dsgame\Enemies\NormalOgre\NormalOgreFSM.hpp">
+      <Filter>Header Files\Ogre\dsgame\Enemies\NormalOgre</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dsgame\Enemies\NormalOgre\NormalOgreUnit.hpp">
+      <Filter>Header Files\Ogre\dsgame\Enemies\NormalOgre</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dsgame\Enemies\FSMState.hpp">
+      <Filter>Header Files\Ogre\dsgame\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

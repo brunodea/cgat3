@@ -1,5 +1,3 @@
-#pragma once
-
 #include "dsgame/HeroUnit.hpp"
 
 using namespace dsgame;
@@ -20,10 +18,7 @@ void HeroUnit::adjustAnimationState(double timeSinceLastFrame)
     }
     else
         anim_name = "Idle1";
-
-    m_pAnimState = m_pEntity->getAnimationState(anim_name);
-    m_pAnimState->setLoop(true);
-    m_pAnimState->setEnabled(true);
+    setAnimState(anim_name);
 }
 
 void HeroUnit::getInput(util::ViewPointsGraph *vpg, const OIS::MouseEvent &arg, OIS::MouseButtonID id)
