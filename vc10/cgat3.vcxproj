@@ -83,6 +83,7 @@
     <ClCompile Include="..\src\appstate\GameState.cpp" />
     <ClCompile Include="..\src\DungeonsSecretsApp.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\util\ViewPointsGraph.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\AppState.hpp" />

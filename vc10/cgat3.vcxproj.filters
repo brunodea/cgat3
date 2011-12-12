@@ -31,6 +31,9 @@
     <Filter Include="Header Files\Ogre\util">
       <UniqueIdentifier>{56204369-6b25-4da3-af8f-863bd8b9a9a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Ogre\util">
+      <UniqueIdentifier>{3f13550f-3ed4-4a5a-8cf2-c4deeb774794}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -50,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="..\dependencies\DotSceneLoader.cpp">
       <Filter>Header Files\Ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\util\ViewPointsGraph.cpp">
+      <Filter>Source Files\Ogre\util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

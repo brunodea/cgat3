@@ -47,8 +47,6 @@ namespace dsgame
                         handleClickedOnGround(vpg, arg);
                     else if(mask == ENEMY_MASK)
                     {
-                        if(m_pEnemyTarget != 0)
-                            return;
                         notarget = false;
                         m_pEnemyTarget = obj;
                         clearDestinations();
@@ -58,7 +56,6 @@ namespace dsgame
 
                         dest += (pos-dest).normalisedCopy()*obj->getBoundingRadius()*.3f;
 
-                        //OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(dest));
                         addDestinations(vpg->pathFindingAStar(pos,dest));
                     }
 
