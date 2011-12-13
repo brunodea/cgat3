@@ -65,7 +65,7 @@ namespace dsgame { namespace npc {
                     Ogre::Vector3 dest = hero_pos;
                     dest += (ogre_pos-hero_pos).normalisedCopy()*hero_entity->getBoundingRadius()*.3f;
                     m_pUnit->clearDestinations();
-                    m_pUnit->addDestination(dest); //TODO... PATH FINDING HERE.
+                    m_pUnit->addDestinations(util::VPGRAPH->pathFindingAStar(ogre_pos, dest));
 
                     //OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(dest));
                 }
@@ -125,7 +125,7 @@ namespace dsgame { namespace npc {
             {
                 if(!m_pUnit->hasNextDestination())
                 {
-                    m_pUnit->addDestination(m_pUnit->getOrigPos());
+                    m_pUnit->addDestinations(util::VPGRAPH->pathFindingAStar(ogre_pos, m_pUnit->getOrigPos()));
                 }
             }
 

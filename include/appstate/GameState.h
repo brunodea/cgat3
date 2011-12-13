@@ -47,9 +47,6 @@ namespace appstate
 
         dsgame::HeroUnit *m_pHero;
         dsgame::npc::NormalOgreUnit *m_pOgre;
-        
-        util::ViewPointsGraph m_ViewPointsGraph;
-
     }; //end of class GameState.
 
 } //end of namespace appstate.

@@ -1,4 +1,5 @@
 #include "dsgame/HeroUnit.hpp"
+#include "macros.h"
 
 using namespace dsgame;
 
@@ -21,7 +22,7 @@ void HeroUnit::adjustAnimationState(double timeSinceLastFrame)
     setAnimState(anim_name);
 }
 
-void HeroUnit::getInput(util::ViewPointsGraph *vpg, const OIS::MouseEvent &arg, OIS::MouseButtonID id)
+void HeroUnit::getInput(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
     if(id == OIS::MB_Left)
     {
@@ -31,7 +32,7 @@ void HeroUnit::getInput(util::ViewPointsGraph *vpg, const OIS::MouseEvent &arg, 
             bool notarget = true;
             Ogre::uint32 mask = obj->getQueryFlags();
             if(mask == GROUND_MASK)
-                handleClickedOnGround(vpg, arg);
+                handleClickedOnGround(arg);
             else if(mask == ENEMY_MASK)
             {
                 notarget = false;
@@ -43,7 +44,7 @@ void HeroUnit::getInput(util::ViewPointsGraph *vpg, const OIS::MouseEvent &arg, 
 
                 dest += (pos-dest).normalisedCopy()*obj->getBoundingRadius()*.3f;
 
-                addDestinations(vpg->pathFindingAStar(pos,dest));
+                addDestinations(util::VPGRAPH->pathFindingAStar(pos,dest));
             }
 
             if(notarget)
@@ -52,7 +53,7 @@ void HeroUnit::getInput(util::ViewPointsGraph *vpg, const OIS::MouseEvent &arg, 
     }
 }
 
-void HeroUnit::handleClickedOnGround(util::ViewPointsGraph *vpg, const OIS::MouseEvent &arg)
+void HeroUnit::handleClickedOnGround(const OIS::MouseEvent &arg)
 {
     Ogre::SceneManager *smgr = Ogre::Root::getSingletonPtr()->getSceneManager("GameSceneMgr");
     Ogre::Camera *cam = smgr->getCamera("HeroCam");
@@ -87,7 +88,7 @@ void HeroUnit::handleClickedOnGround(util::ViewPointsGraph *vpg, const OIS::Mous
         {
             Ogre::Vector3 position = mouseRay.getPoint(rayresult.second);
             clearDestinations();
-            addDestinations(vpg->pathFindingAStar(getNode()->getPosition(),position));
+            addDestinations(util::VPGRAPH->pathFindingAStar(getNode()->getPosition(),position));
         }
 
         smgr->destroyQuery(rsq);

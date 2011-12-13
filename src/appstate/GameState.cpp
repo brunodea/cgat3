@@ -5,13 +5,14 @@
 using namespace appstate;
 
 GameState::GameState()
-    : m_bQuit(false), m_pHero(0), m_bRMousePressed(false), m_ViewPointsGraph(), m_pOgre(0)
+    : m_bQuit(false), m_pHero(0), m_bRMousePressed(false), m_pOgre(0)
 {
 }
 
 GameState::~GameState()
 {
     delete m_pHero;
+    delete util::VPGRAPH;
 }
 
 void GameState::enter()
@@ -115,7 +116,7 @@ bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
     }
     else if(id == OIS::MB_Left)
     {
-        if(!m_ViewPointsGraph.isCreated())
+        if(!util::VPGRAPH->isCreated())
         {
             std::vector<Ogre::Vector3> points;
             for(int i = 1; i <= 42; i++)
@@ -124,10 +125,10 @@ bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
                 nome.append(Ogre::StringConverter::toString(i));
                 points.push_back(m_pSceneMgr->getSceneNode(nome)->getPosition());
             }
-            m_ViewPointsGraph.createGraph(points);
+            util::VPGRAPH->createGraph(points);
         }
 
-        m_pHero->getInput(&m_ViewPointsGraph, arg, id);
+        m_pHero->getInput(util::VPGRAPH, arg, id);
     }
     OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(arg, id);
     return true;
