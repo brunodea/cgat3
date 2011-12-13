@@ -70,6 +70,7 @@ namespace dsgame //Dungeon's Secret Game.
 
     protected:
         virtual void move(double timeSinceLastFrame);
+        void fillGameUnitByFile(const Ogre::String &filename, void(GameUnit::*fill_spec_ptr)(const Ogre::String &, const Ogre::String &) = 0);
 
     protected:
         bool m_isMoving;
@@ -81,7 +82,6 @@ namespace dsgame //Dungeon's Secret Game.
         Ogre::Real m_Damage; //quanto de dano causa.
 
     private:
-        void fillGameUnitByFile(const Ogre::String &filename);
         void init(const Ogre::Vector3 &dir, const Ogre::Real &speed, Ogre::Entity *entity, Ogre::Node *unit_node);
         
     private:

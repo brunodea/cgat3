@@ -54,6 +54,10 @@ namespace dsgame { namespace npc {
         FSM *m_FSM;
         Ogre::Vector3 m_OrigPos;
         Ogre::Real m_VisibilityRadius;
+        Ogre::Degree m_VisionAngleDegrees;
+
+    private:
+        void fillSpecificAttr(const Ogre::String &attribute,  const Ogre::String &value);
     }; //end of class NPCUnit.
 } //end of namespace npc.
 } //end of namespace dsgame.

@@ -56,9 +56,9 @@ namespace dsgame { namespace npc {
             Ogre::Real dist = hero_pos.distance(ogre_pos);
             if(dist > m_pUnit->getVisibilityRadius())
                 setNextState(RETURN_STATE);
-           // else if(!m_pUnit->hasNextDestination())
-            //{
-                else if(dist <= hero_entity->getBoundingRadius())
+            else if(!m_pUnit->hasNextDestination())
+            {
+                if(dist <= hero_entity->getBoundingRadius())
                     setNextState(ATTACK_STATE);
                 else
                 {
@@ -69,7 +69,7 @@ namespace dsgame { namespace npc {
 
                     //OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(dest));
                 }
-            //}
+            }
         }
 
         void leave() {}

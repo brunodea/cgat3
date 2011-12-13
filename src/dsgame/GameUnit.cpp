@@ -122,7 +122,7 @@ bool GameUnit::shouldMove()
     return move;
 }
 
-void GameUnit::fillGameUnitByFile(const Ogre::String &filename)
+void GameUnit::fillGameUnitByFile(const Ogre::String &filename, void(GameUnit::*fill_spec_ptr)(const Ogre::String &, const Ogre::String &))
 {
     std::ifstream file(filename);
     std::string line;
@@ -155,6 +155,9 @@ void GameUnit::fillGameUnitByFile(const Ogre::String &filename)
                 {
                     m_Damage = Ogre::StringConverter::parseReal(sp[1]);
                 }
+               
+                if(fill_spec_ptr != 0)
+                    (this->*fill_spec_ptr)(sp[0], sp[1]);
             }
         }
         file.close();
