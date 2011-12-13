@@ -128,7 +128,7 @@ bool GameState::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
             util::VPGRAPH->createGraph(points);
         }
 
-        m_pHero->getInput(util::VPGRAPH, arg, id);
+        m_pHero->getInput(arg, id);
     }
     OgreFramework::getSingletonPtr()->m_pTrayMgr->injectMouseDown(arg, id);
     return true;
