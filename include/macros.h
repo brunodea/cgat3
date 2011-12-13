@@ -1,6 +1,7 @@
 #ifndef _CGA_T3_MACROS_H_
 #define _CGA_T3_MACROS_H_
 
+#define VPGRAPH ViewPointsGraph::getInstance()
 
 typedef enum
 {

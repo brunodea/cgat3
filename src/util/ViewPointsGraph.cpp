@@ -2,6 +2,8 @@
 
 using namespace util;
 
+ViewPointsGraph *ViewPointsGraph::m_sInstance = 0;
+
 ViewPointsGraph::ViewPointsGraph()
     : m_Nodes(), m_bGraphIsCreated(false)
 {
@@ -10,6 +12,13 @@ ViewPointsGraph::ViewPointsGraph()
 ViewPointsGraph::~ViewPointsGraph()
 {
     erase();
+}
+
+ViewPointsGraph *ViewPointsGraph::getInstance()
+{
+    if(m_sInstance == 0)
+        m_sInstance = new ViewPointsGraph();
+    return m_sInstance;
 }
 
 void ViewPointsGraph::createGraph(const std::vector<Ogre::Vector3> &points)

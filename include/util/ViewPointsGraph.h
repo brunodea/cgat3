@@ -11,7 +11,8 @@ namespace util
     class ViewPointsGraph
     {
     public:
-        ViewPointsGraph();
+        static ViewPointsGraph* getInstance();
+
         ~ViewPointsGraph();
 
         bool isCreated() { return m_bGraphIsCreated; }
@@ -29,6 +30,7 @@ namespace util
         }; //end of struct Node.
 
     private:
+        ViewPointsGraph();
 
         void adjustNeighbors(Node *node);
         std::vector<Node *> astar(Node *n, const Ogre::Vector3 &dest);
@@ -36,6 +38,8 @@ namespace util
         void unvisitNodes();
 
     private:
+        static ViewPointsGraph *m_sInstance;
+
         std::vector<Node *> m_Nodes;
         bool m_bGraphIsCreated;
 
