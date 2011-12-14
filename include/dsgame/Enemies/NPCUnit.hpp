@@ -4,6 +4,7 @@
 #include "dsgame/Enemies/FSM.hpp"
 #include "dsgame/Enemies/FSMFactory.hpp"
 #include "dsgame/Enemies/FSMState.hpp"
+#include "macros.h"
 
 namespace dsgame { namespace npc {
     class NPCUnit;
@@ -49,12 +50,27 @@ namespace dsgame { namespace npc {
 
         Ogre::Vector3 getOrigPos() { return m_OrigPos; }
         Ogre::Real getVisibilityRadius() { return m_VisibilityRadius; }
+        bool isVisible(const Ogre::Vector3& dest);
+
+        Ogre::Real getMaxSpeed() { return m_MaxSpeed; }
+        Ogre::Real getMass() { return m_Mass; }
+        Ogre::Real getMaxForce() { return m_MaxForce; }
+        Ogre::Vector3 getVelocity() { return m_Velocity; }
+
+        void move(double timeSinceLastFrame);
+        void setSteeringType(SteeringTypeEnum steering_type) { m_CurrSteeringType = steering_type; }
 
     protected:
         FSM *m_FSM;
         Ogre::Vector3 m_OrigPos;
         Ogre::Real m_VisibilityRadius;
         Ogre::Degree m_VisionAngleDegrees;
+        Ogre::Real m_Mass;
+        Ogre::Real m_MaxSpeed;
+        Ogre::Real m_MaxForce;
+        Ogre::Vector3 m_Velocity;
+
+        SteeringTypeEnum m_CurrSteeringType;
 
     private:
         void fillSpecificAttr(const Ogre::String &attribute,  const Ogre::String &value);

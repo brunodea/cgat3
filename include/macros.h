@@ -1,5 +1,4 @@
-#ifndef _CGA_T3_MACROS_H_
-#define _CGA_T3_MACROS_H_
+#pragma once
 
 #define VPGRAPH ViewPointsGraph::getInstance()
 
@@ -21,5 +20,8 @@ typedef enum
     LIFE_LOW_STATE
 } FSMStateEnum;
 
-#endif
-
+typedef enum
+{
+    STEERING_IDLE = 0,
+    STEERING_SEEK = 1,
+} SteeringTypeEnum;

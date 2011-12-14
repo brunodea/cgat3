@@ -54,14 +54,16 @@ void GameState::update(double timeSinceLastFrame)
         return;
     }
     
+    Ogre::Vector3 h_last_pos = m_pHero->getNode()->getPosition();
     m_pHero->update(timeSinceLastFrame);
+    Ogre::Vector3 h_new_pos = m_pHero->getNode()->getPosition();
 
     m_pOgre->behave();
     m_pOgre->update(timeSinceLastFrame);
     
     m_pCamera->lookAt(m_pHero->getNode()->getPosition());
     if(m_pHero->isMoving())
-        m_pCamera->move(m_pHero->getDirection()*m_pHero->getSpeed()*timeSinceLastFrame);
+        m_pCamera->move(h_new_pos-h_last_pos);
 }
 
 bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef)

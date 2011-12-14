@@ -39,11 +39,13 @@ namespace dsgame //Dungeon's Secret Game.
 
         void rotate(Ogre::Degree angle);
         void rotate(Ogre::Real degrees);
+        void rotateTo(const Ogre::Vector3& dest, Ogre::Degree error=Ogre::Degree(.5f));
 
         virtual void adjustAnimationState(double timeSinceLastFrame) = 0;
 
         Ogre::Vector3 getDirection();
         Ogre::Real getSpeed() { return m_Speed; }
+        void setSpeed(Ogre::Real speed) { m_Speed = speed; }
         
         Ogre::Entity *getEntity() { return m_pEntity; }
         Ogre::Node *getNode() { return m_pUnitNode; }

@@ -21,13 +21,14 @@ namespace dsgame { namespace npc {
         void enter()
         {
             m_pUnit->setAnimState("Idle2");
+            m_pUnit->setSteeringType(STEERING_IDLE);
         }
 
         void run() 
         {
             Ogre::Vector3 hero_pos = Ogre::Root::getSingletonPtr()->getSceneManager("GameSceneMgr")->getSceneNode("HeroNode")->getPosition();
-            Ogre::Vector3 ogre_pos = m_pUnit->getNode()->getPosition();
-            if(hero_pos.distance(ogre_pos) <= m_pUnit->getVisibilityRadius() && util::isVisible(ogre_pos, hero_pos))
+            
+            if(m_pUnit->isVisible(hero_pos))
                 setNextState(SEEK_STATE);
         }
 
@@ -45,6 +46,8 @@ namespace dsgame { namespace npc {
         void enter() 
         {
             m_pUnit->setAnimState("Run");
+            m_pUnit->setSteeringType(STEERING_SEEK);
+            m_pUnit->clearDestinations();
         }
 
         void run() 
@@ -54,22 +57,26 @@ namespace dsgame { namespace npc {
             Ogre::Vector3 ogre_pos = m_pUnit->getNode()->getPosition();
 
             Ogre::Real dist = hero_pos.distance(ogre_pos);
-            if(dist > m_pUnit->getVisibilityRadius())
+            if(!m_pUnit->isVisible(hero_pos))
                 setNextState(RETURN_STATE);
-            else if(!m_pUnit->hasNextDestination())
-            {
-                if(dist <= hero_entity->getBoundingRadius())
+            //else if(!m_pUnit->hasNextDestination())
+           // {
+                else if(dist <= hero_entity->getBoundingRadius())
                     setNextState(ATTACK_STATE);
                 else
                 {
-                    Ogre::Vector3 dest = hero_pos;
-                    dest += (ogre_pos-hero_pos).normalisedCopy()*hero_entity->getBoundingRadius()*.3f;
-                    m_pUnit->clearDestinations();
-                    m_pUnit->addDestinations(util::VPGRAPH->pathFindingAStar(ogre_pos, dest));
+                    //soh refaz os calculos do pathfinding se o player estiver fora do raio ao redor do destino.
+                    if(!m_pUnit->hasNextDestination() || hero_pos.distance(m_pUnit->getNextDestination()) > 3.f) 
+                    {
+                        Ogre::Vector3 dest = hero_pos;
+                        dest += (ogre_pos-hero_pos).normalisedCopy()*hero_entity->getBoundingRadius()*.3f;
 
+                        m_pUnit->clearDestinations();
+                        m_pUnit->addDestinations(util::VPGRAPH->pathFindingAStar(ogre_pos, dest));
+                    }
                     //OgreFramework::getSingletonPtr()->m_pLog->logMessage(Ogre::StringConverter::toString(dest));
                 }
-            }
+           // }
         }
 
         void leave() {}
@@ -119,11 +126,11 @@ namespace dsgame { namespace npc {
         {
             Ogre::Vector3 hero_pos = Ogre::Root::getSingletonPtr()->getSceneManager("GameSceneMgr")->getSceneNode("HeroNode")->getPosition();
             Ogre::Vector3 ogre_pos = m_pUnit->getNode()->getPosition();
-            if(hero_pos.distance(ogre_pos) <= m_pUnit->getVisibilityRadius() && util::isVisible(ogre_pos, hero_pos))
+            if(m_pUnit->isVisible(hero_pos))
                 setNextState(SEEK_STATE);
             else
             {
-                if(!m_pUnit->hasNextDestination())
+                if(!m_pUnit->hasNextDestination()) //soh faz o path finding uma vez quando entra nesse estado.
                 {
                     m_pUnit->addDestinations(util::VPGRAPH->pathFindingAStar(ogre_pos, m_pUnit->getOrigPos()));
                 }

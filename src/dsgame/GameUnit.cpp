@@ -56,6 +56,28 @@ void GameUnit::rotate(Ogre::Real degrees)
     rotate(Ogre::Degree(degrees));
 }
 
+//se, após a rotação, o ângulo entre a direção e o destino for maior, significa que o certo
+//era rotacionar para o outro lado, pois este está mais perto.        
+void GameUnit::rotateTo(const Ogre::Vector3& dest, Ogre::Degree error)
+{
+    Ogre::Vector3 dir = getDirection().normalisedCopy();
+    if(dir.directionEquals(dest,Ogre::Radian(error)) == true)
+        return;
+
+    Ogre::Real init_angle = dir.angleBetween(dest).valueDegrees();
+                
+    Ogre::Real rot_angle = dir.angleBetween(dir+dest).valueDegrees()/(dir.distance(dest)*5.f);
+
+    m_DirAngle += Ogre::Degree(rot_angle);
+    Ogre::Real after_angle = getDirection().angleBetween(dest).valueDegrees();
+    m_DirAngle -= Ogre::Degree(rot_angle);
+
+    if(after_angle > init_angle)
+        rot_angle *= -1;
+
+    rotate(rot_angle);
+}
+
 Ogre::Vector3 GameUnit::getDirection()
 {
     Ogre::Quaternion quat = Ogre::Quaternion(m_DirAngle,Ogre::Vector3::UNIT_Y);
@@ -87,26 +109,8 @@ void GameUnit::move(double timeSinceLastFrame)
 
     Ogre::Vector3 dest = getNextDestination()-m_pUnitNode->getPosition();
     dest.normalise();
-    Ogre::Vector3 dir = getDirection();
-    dir.normalise();
-            
-    if(dir.directionEquals(dest,Ogre::Radian(Ogre::Degree(.5f))) == false)
-    {
-        //se, após a rotação, o ângulo entre a direção e o destino for maior, significa que o certo
-        //era rotacionar para o outro lado, pois este está mais perto.
-        Ogre::Real init_angle = dir.angleBetween(dest).valueDegrees();
-                
-        Ogre::Real rot_angle = dir.angleBetween(dir+dest).valueDegrees()/(dir.distance(dest)*5.f);
-
-        m_DirAngle += Ogre::Degree(rot_angle);
-        Ogre::Real after_angle = getDirection().angleBetween(dest).valueDegrees();
-        m_DirAngle -= Ogre::Degree(rot_angle);
-
-        if(after_angle > init_angle)
-            rot_angle *= -1;
-
-        rotate(rot_angle);
-    }
+          
+    rotateTo(dest);
 
     m_pUnitNode->translate(getDirection()*getSpeed()*timeSinceLastFrame);
 }

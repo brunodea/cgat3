@@ -81,6 +81,9 @@
     <ClCompile Include="..\src\dsgame\Enemies\NPCUnit.cpp">
       <Filter>Source Files\Ogre\dsgame</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\dsgame\Enemies\SteeringBehavior.cpp">
+      <Filter>Source Files\Ogre\dsgame\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\DungeonsSecretsApp.h">
@@ -135,6 +138,9 @@
       <Filter>Header Files\Ogre\dsgame\Enemies\NormalOgre</Filter>
     </ClInclude>
     <ClInclude Include="..\include\dsgame\Enemies\FSMState.hpp">
+      <Filter>Header Files\Ogre\dsgame\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dsgame\Enemies\SteeringBehavior.hpp">
       <Filter>Header Files\Ogre\dsgame\Enemies</Filter>
     </ClInclude>
   </ItemGroup>

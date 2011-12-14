@@ -83,6 +83,7 @@
     <ClCompile Include="..\src\appstate\GameState.cpp" />
     <ClCompile Include="..\src\dsgame\Enemies\FSM.cpp" />
     <ClCompile Include="..\src\dsgame\Enemies\NPCUnit.cpp" />
+    <ClCompile Include="..\src\dsgame\Enemies\SteeringBehavior.cpp" />
     <ClCompile Include="..\src\dsgame\GameUnit.cpp" />
     <ClCompile Include="..\src\dsgame\HeroUnit.cpp" />
     <ClCompile Include="..\src\DungeonsSecretsApp.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="..\include\dsgame\Enemies\NormalOgre\NormalOgreFSM.hpp" />
     <ClInclude Include="..\include\dsgame\Enemies\NormalOgre\NormalOgreUnit.hpp" />
     <ClInclude Include="..\include\dsgame\Enemies\NPCUnit.hpp" />
+    <ClInclude Include="..\include\dsgame\Enemies\SteeringBehavior.hpp" />
     <ClInclude Include="..\include\dsgame\GameUnit.hpp" />
     <ClInclude Include="..\include\dsgame\HeroUnit.hpp" />
     <ClInclude Include="..\include\DungeonsSecretsApp.h" />
